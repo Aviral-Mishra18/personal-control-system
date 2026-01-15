@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Control System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <h1>🎯 Personal Control System</h1>
+            <div id="time-indicator" class="time-indicator" style="font-size: 0.8rem; opacity: 0.7;"></div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#expenses">Expenses</a></li>
+                <li><a href="#habits">Habits</a></li>
+                <li><a href="#time">Time Awareness</a></li>
+                <li><button class="home-btn" id="home-btn">🏠 Home</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app">
+
+        <!-- LANDING PAGE -->
+        <section id="landing">
+            <div class="hero">
+                <h1>🎯 Personal Control System</h1>
+                <p>Master Your Money, Habits, Time & Productivity</p>
+                <div class="cta-buttons">
+                    <a href="#expenses" class="cta-button cta-primary">Start Tracking</a>
+                    <a href="#dashboard" class="cta-button cta-secondary">View Dashboard</a>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Expense Tracker</h3>
+                        <p>Monitor spending and detect financial leaks</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3>Habit Tracker</h3>
+                        <p>Build streaks and maintain discipline</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏱️</div>
+                        <h3>Time Awareness</h3>
+                        <p>Track productivity and wasted time</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Insights Dashboard</h3>
+                        <p>Get actionable insights on all metrics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 6: INSIGHTS ENGINE (Top Level Dashboard) -->
+        <section id="dashboard">
+            <h2>Insights Dashboard</h2>
+
+            <!-- EMPTY STATE: No data at all -->
+            <div id="dashboard-empty-state" class="state-container empty-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">📊</div>
+                    <h3>Welcome to Your Dashboard</h3>
+                    <p>Start tracking expenses, habits, and time to see personalized insights here</p>
+                </div>
+            </div>
+
+            <!-- MOST IMPORTANT TODAY - Featured Widget -->
+            <div id="most-important-widget" class="most-important-container">
+                <div class="priority-header">
+                    <span class="priority-badge">🎯 PRIORITY</span>
+                    <h2>Most Important Today</h2>
+                </div>
+                <div id="priority-content" class="priority-content">
+                    <div class="priority-item">
+                        <span class="priority-icon">⚡</span>
+                        <span class="priority-text">Focus on your top goal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRUTH SUMMARY CARDS -->
+            <div id="truth-summary-cards" class="truth-summary-grid muted-section">
+                <!-- Card 1: Financial Health -->
+                <div class="truth-summary-card danger" id="financial-health-card">
+                    <div class="card-icon">💰</div>
+                    <div class="card-value" id="financial-value">0</div>
+                    <div class="card-label">Financial Leak</div>
+                </div>
+
+                <!-- Card 2: Productivity Score -->
+                <div class="truth-summary-card success" id="productivity-card">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-value" id="productivity-value">0%</div>
+                    <div class="card-label">Productivity</div>
+                </div>
+
+                <!-- Card 3: Habit Streak -->
+                <div class="truth-summary-card" id="habit-card">
+                    <div class="card-icon">🔥</div>
+                    <div class="card-value" id="habit-value">0</div>
+                    <div class="card-label">Best Streak</div>
+                </div>
+
+                <!-- Card 4: Time Wasted -->
+                <div class="truth-summary-card danger" id="time-wasted-card">
+                    <div class="card-icon">⏳</div>
+                    <div class="card-value" id="time-value">0</div>
+                    <div class="card-label">Hours Wasted</div>
+                </div>
+            </div>
+
+            <div id="insights-container" class="muted-section">
+                <p id="waste-insight">Loading insights...</p>
+                <p id="productivity-insight"></p>
+                <p id="discipline-insight"></p>
+            </div>
+        </section>
+
+        <!-- PHASE 3: EXPENSE TRACKER -->
+        <section id="expenses">
+            <h2>Expense Tracker</h2>
+
+            <!-- Quick Add Form (Always Visible) -->
+            <div id="quick-add-container" class="quick-add-box">
+                <form id="expense-form" class="inline-form">
+                    <div class="form-row">
+                        <input type="number" id="expense-amount" placeholder="Amount" required>
+
+                        <div class="category-wrapper">
+                            <select id="expense-category" required>
+                                <option value="" disabled selected>Category</option>
+                                <option value="Food">🍔 Food</option>
+                                <option value="Travel">🚗 Travel</option>
+                                <option value="Learning">📚 Learning</option>
+                                <option value="Entertainment">🎬 Entertainment</option>
+                                <option value="Waste">🗑️ Waste</option>
+                            </select>
+                            <div id="category-preview" class="category-preview"></div>
+                        </div>
+
+                        <input type="text" id="expense-note" placeholder="Note (e.g. Starbucks)">
+                        <input type="date" id="expense-date" required>
+                        <button type="submit" class="submit-btn">Add</button>
+                    </div>
+
+                    <!-- Waste Warning -->
+                    <div id="waste-warning" class="warning-message" style="display: none;">
+                        ⚠️ <strong>Watch out!</strong> This category tracks unnecessary spending. Be mindful of this.
+                    </div>
+                </form>
+            </div>
+
+            <div class="filters">
+                <label for="filter-month">Filter Month:</label>
+                <input type="month" id="filter-month">
+                <button id="clear-month-btn">Clear Selected Month</button>
+            </div>
+
+            <div id="expense-summary">
+                <p>Monthly Budget: <input type="number" id="budget-input" value="10000" min="0" style="width: 100px;">
+                    <button id="set-budget-btn" style="padding: 0.3rem 0.6rem; font-size: 0.9rem;">Set Budget</button>
+                </p>
+                <p>Monthly Total: <span id="total-monthly-amount">0</span></p>
+                <p>Remaining Amount: <span id="remaining-amount">0</span></p>
+                <p>Leak Status: <span id="leak-detection">No data</span></p>
+            </div>
+
+            <!-- EMPTY STATE: No expenses yet -->
+            <div id="expense-empty-state" class="state-container empty-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">📭</div>
+                    <h3>No Expenses Yet</h3>
+                    <p>Start tracking your spending to see insights here</p>
+                </div>
+            </div>
+
+            <!-- WARNING STATE: High waste spending -->
+            <div id="expense-warning-state" class="state-container warning-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">⚠️</div>
+                    <h3>Spending Warning</h3>
+                    <div id="expense-warning-messages" class="warning-details"></div>
+                </div>
+            </div>
+
+            <!-- CRITICAL STATE: Waste exceeded -->
+            <div id="expense-critical-state" class="state-container critical-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">🚨</div>
+                    <h3>Waste Alert!</h3>
+                    <p>⚠️ You've exceeded your waste limit this month</p>
+                    <div class="state-metric" id="waste-critical-amount"></div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="expense-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Note</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-list">
+                        <!-- Expenses will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PHASE 4: HABIT TRACKER -->
+        <section id="habits">
+            <h2>Habit Tracker</h2>
+
+            <!-- EMPTY STATE: No habits tracked today -->
+            <div id="habit-empty-state" class="state-container empty-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">📋</div>
+                    <h3>No Habits Tracked Today</h3>
+                    <p>Start building your streaks by marking habits complete</p>
+                </div>
+            </div>
+
+            <!-- WARNING STATE: Productivity down or Waste up -->
+            <div id="habit-warning-state" class="state-container warning-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">⚠️</div>
+                    <h3>Attention Required</h3>
+                    <div id="warning-messages" class="warning-details"></div>
+                </div>
+            </div>
+
+            <!-- CRITICAL STATE: Habit streak = 0 or Waste > limit -->
+            <div id="habit-critical-state" class="state-container critical-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">🔴</div>
+                    <h3>Critical Status</h3>
+                    <div id="critical-messages" class="critical-details"></div>
+                </div>
+            </div>
+
+            <div id="habit-grid">
+                <!-- Habit: Study -->
+                <div class="habit-card" data-habit="study">
+                    <h3>Study</h3>
+                    <p>Current Streak: <span class="current-streak">0</span></p>
+                    <p>Longest Streak: <span class="longest-streak">0</span></p>
+                    <button class="habit-toggle">Mark Completed Today</button>
+                </div>
+
+                <!-- Habit: Exercise -->
+                <div class="habit-card" data-habit="exercise">
+                    <h3>Exercise</h3>
+                    <p>Current Streak: <span class="current-streak">0</span></p>
+                    <p>Longest Streak: <span class="longest-streak">0</span></p>
+                    <button class="habit-toggle">Mark Completed Today</button>
+                </div>
+
+                <!-- Habit: Coding -->
+                <div class="habit-card" data-habit="coding">
+                    <h3>Coding</h3>
+                    <p>Current Streak: <span class="current-streak">0</span></p>
+                    <p>Longest Streak: <span class="longest-streak">0</span></p>
+                    <button class="habit-toggle">Mark Completed Today</button>
+                </div>
+
+                <!-- Habit: No Junk Food -->
+                <div class="habit-card" data-habit="noJunkFood">
+                    <h3>No Junk Food</h3>
+                    <p>Current Streak: <span class="current-streak">0</span></p>
+                    <p>Longest Streak: <span class="longest-streak">0</span></p>
+                    <button class="habit-toggle">Mark Completed Today</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 5: TIME AWARENESS TRACKER -->
+        <section id="time">
+            <h2>Time Awareness</h2>
+
+            <!-- EMPTY STATE: No time logs yet -->
+            <div id="time-empty-state" class="state-container empty-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">⏰</div>
+                    <h3>No Time Logs Yet</h3>
+                    <p>Start tracking your screen time and productivity to see insights here</p>
+                </div>
+            </div>
+
+            <!-- WARNING STATE: High wasted time -->
+            <div id="time-warning-state" class="state-container warning-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">⚠️</div>
+                    <h3>Time Warning</h3>
+                    <div id="time-warning-messages" class="warning-details"></div>
+                </div>
+            </div>
+
+            <!-- CRITICAL STATE: Excessive wasted time -->
+            <div id="time-critical-state" class="state-container critical-state" style="display: none;">
+                <div class="state-content">
+                    <div class="state-icon">🚨</div>
+                    <h3>Time Crisis</h3>
+                    <div id="time-critical-messages" class="critical-details"></div>
+                </div>
+            </div>
+
+            <form id="time-log-form">
+                <input type="date" id="time-log-date" required>
+                <label for="screen-time">Screen Time (Hours):</label>
+                <input type="number" id="screen-time" step="0.1" min="0" max="24" required>
+
+                <label for="productive-time">Productive Time (Hours):</label>
+                <input type="number" id="productive-time" step="0.1" min="0" max="24" required>
+
+                <button type="submit">Log Time</button>
+            </form>
+
+            <div id="time-summary">
+                <h3>Weekly Summary</h3>
+                <p id="total-screen-time">Total Screen Time: 0 hrs</p>
+                <p id="total-productive-time">Total Productive Time: 0 hrs</p>
+                <p id="wasted-time-output">You wasted 0 hours this week</p>
+            </div>
+        </section>
+
+        <!-- PHASE 7: DATA MANAGEMENT -->
+        <section id="settings">
+            <button id="reset-data-btn">Reset All Data</button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Personal Control System - Data-First Implementation</p>
+    </footer>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+    <script src="expenses.js"></script>
+    <script src="habits.js"></script>
+    <script src="time.js"></script>
+
+</body>
+
+</html>
