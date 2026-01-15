@@ -140,6 +140,24 @@ header h1 {
     font-weight: 500;
 }
 
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
 nav ul {
     list-style: none;
     display: flex;
@@ -177,6 +195,67 @@ nav a:hover {
 .home-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Dark Mode */
+body.dark-mode {
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    --bg-color: #1a1a2e;
+    --card-bg: rgba(30, 30, 50, 0.95);
+    --glass-bg: rgba(40, 40, 60, 0.98);
+    --text-primary: #ffffff;
+    --text-secondary: #cbd5e1;
+    --accent: #00d4ff;
+    --accent-hover: #00b4d8;
+    --accent-light: #48cae4;
+    --accent-dark: #0077b6;
+    --primary: #8b5cf6;
+    --primary-light: #a78bfa;
+    --primary-dark: #7c3aed;
+    --danger: #ff6b6b;
+    --success: #51cf66;
+    --warning: #ffd43b;
+    --border: #495057;
+    --glass-border: rgba(100, 100, 120, 0.3);
+}
+
+/* Ensure graphics/icons are visible in dark mode */
+body.dark-mode .card-icon,
+body.dark-mode .feature-icon {
+    color: #48cae4;
+    filter: brightness(1.2);
+}
+
+body.dark-mode .habit-card,
+body.dark-mode .truth-summary-card {
+    border: 1px solid rgba(100, 100, 120, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 main {
@@ -437,6 +516,28 @@ select:focus {
     border-color: var(--accent);
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+/* Dark Mode Input Fixes */
+body.dark-mode input,
+body.dark-mode select {
+    color: #1e293b; /* Dark text for visibility on light background */
+    background-color: rgba(255, 255, 255, 0.95); /* More opaque white background */
+    border-color: rgba(100, 100, 120, 0.5); /* Subtle dark border */
+    caret-color: #1e293b; /* Dark caret */
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode select::placeholder {
+    color: #64748b; /* Medium gray placeholder text */
+    opacity: 0.7;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus {
+    background-color: rgba(255, 255, 255, 0.98); /* Even more opaque on focus */
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); /* Bright cyan glow */
 }
 
 button {
@@ -724,6 +825,46 @@ button:active {
 
 /* Responsive form */
 @media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    header>div {
+        justify-content: space-between;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border-radius: 0 0 1rem 1rem;
+        border: 1px solid var(--glass-border);
+        border-top: none;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul.show {
+        display: flex;
+    }
+
+    nav a {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
     .hero {
         max-width: 100%;
         padding: 0 1rem;
