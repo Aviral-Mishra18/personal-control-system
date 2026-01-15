@@ -434,6 +434,49 @@ window.updateInsights = function () {
     updateTruthSummaryCards();
 };
 
+// Theme Toggle Functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('theme-toggle');
+    const hamburger = document.getElementById('hamburger');
+    const navUl = document.querySelector('nav ul');
+    const body = document.body;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Hamburger menu toggle
+    hamburger.addEventListener('click', function () {
+        navUl.classList.toggle('show');
+    });
+
+    // Close menu when clicking outside or on a link
+    document.addEventListener('click', function (e) {
+        if (!hamburger.contains(e.target) && !navUl.contains(e.target)) {
+            navUl.classList.remove('show');
+        }
+    });
+
+    navUl.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+            navUl.classList.remove('show');
+        }
+    });
+});
+
 // Console greeting
 console.log('%c🎯 Personal Control System', 'font-size: 20px; font-weight: bold; color: #06b6d4;');
 console.log('%cTip: Press Ctrl+Shift+R to reset all data', 'font-size: 12px; color: #64748b;');
