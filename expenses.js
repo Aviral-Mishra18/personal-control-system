@@ -245,4 +245,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial Render
     renderExpenses();
+
 });
